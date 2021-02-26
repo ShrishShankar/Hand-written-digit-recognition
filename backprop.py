@@ -80,10 +80,10 @@ def GradientDescent(X, Y, theta1, theta2, Lambda, classes, m, alpha, iterations)
     return theta1, theta2
 
 
-theta_data = loadmat("W5-assignment/ex4weights.mat")
+theta_data = loadmat("ex4weights.mat")
 theta1, theta2 = theta_data['Theta1'], theta_data['Theta2']
 
-data = loadmat("W4-assignment/ex3data1.mat")
+data = loadmat("ex3data1.mat")
 X, y = data['X'], data['y']
 
 classes = 10
