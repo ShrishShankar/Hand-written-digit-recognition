@@ -80,10 +80,10 @@ def GradientDescent(X, Y, theta1, theta2, Lambda, classes, m, alpha, iterations)
     return theta1, theta2
 
 
-theta_data = loadmat("ex4weights.mat")
+theta_data = loadmat("W5-assignment/ex4weights.mat")
 theta1, theta2 = theta_data['Theta1'], theta_data['Theta2']
 
-data = loadmat("ex3data1.mat")
+data = loadmat("W4-assignment/ex3data1.mat")
 X, y = data['X'], data['y']
 
 classes = 10
@@ -122,14 +122,16 @@ my_theta1, my_theta2 = GradientDescent(
     X, Y, my_theta1, my_theta2, Lambda, classes, m, alpha, iterations)
 
 max_indices = [None]*9
+maxes = [None]*9
 for i in range(0, 100):
     a2 = np.zeros(25)
     a2 = propagate_forward(X[rand_indices[i]], my_theta1)
     a2 = np.hstack((np.ones(1), a2))
     h = propagate_forward(a2, my_theta2)
     index_max = np.argmax(h)
-    if(i<9):
+    if(i < 9):
         max_indices[i] = index_max
+        maxes[i] = h[index_max]
     print("Random index: {} | Predicted number: {} | Actual number: {}".format(
         rand_indices[i], index_max, int(y[rand_indices[i]])))
     print("Probabilities:")
@@ -142,7 +144,8 @@ columns = 3
 axis = [None]*9
 for i in range(1, rows*columns+1):
     axis[i-1] = fig.add_subplot(rows, columns, i)
-    axis[i-1].set_title("Predicted number: {}".format(max_indices[i-1]), fontsize=10)
+    axis[i-1].set_title("Predicted number: {} ({:.2f}%)".format(
+        max_indices[i-1], maxes[i-1]*100), fontsize=9)
     plt.imshow(X_display[rand_indices[i-1]].reshape(20, 20).T, cmap='gray')
 fig.tight_layout()
 plt.show()
